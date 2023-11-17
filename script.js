@@ -1,5 +1,5 @@
 // All book objects will be stored in this array
-const myLibrary = [
+let myLibrary = [
     
 // {
 // title: "Ephemeral Echoes",
@@ -24,17 +24,17 @@ function Book(title = "Untitled", author = "Unknown Author", pages = 0, status =
     this.status = status;
 }
 
-// const newBook1 = new Book("The Hidden Garden", "Eleanor Green", 200, false);
-// const newBook2 = new Book("Timeless Odyssey", "Samuel Journey", 350, true);
-// const newBook3 = new Book("City of Dreams", "Ava Dreamer", 280, false);
-// const newBook4 = new Book("Beyond the Horizon", "Oliver Skyward", 420, true);
-// const newBook5 = new Book("Serenity Falls", "Luna Waters", 150, false);
+const newBook1 = new Book("The Hidden Garden", "Eleanor Green", 200, false);
+const newBook2 = new Book("Timeless Odyssey", "Samuel Journey", 350, true);
+const newBook3 = new Book("City of Dreams", "Ava Dreamer", 280, false);
+const newBook4 = new Book("Beyond the Horizon", "Oliver Skyward", 420, true);
+const newBook5 = new Book("Serenity Falls", "Luna Waters", 150, false);
 
-// addBookToLibrary(newBook1);
-// addBookToLibrary(newBook2);
-// addBookToLibrary(newBook3);
-// addBookToLibrary(newBook4);
-// addBookToLibrary(newBook5);
+addBookToLibrary(newBook1);
+addBookToLibrary(newBook2);
+addBookToLibrary(newBook3);
+addBookToLibrary(newBook4);
+addBookToLibrary(newBook5);
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -42,10 +42,6 @@ function addBookToLibrary(book) {
 
 
 
-//make this a function later.
-for (let i = 0; i <myLibrary.length; i++){
-    console.log(myLibrary[i].title + " "+ myLibrary[i].author + " "+ myLibrary[i].pages + " "+myLibrary[i].status);
-}
 
 
 
@@ -78,6 +74,7 @@ form.addEventListener('submit',function(event){
 
   book = new Book(title.value, author.value, pages.value , "temp value")
   addBookToLibrary(book);
+  createCard(title.value, author.value, pages.value , "temp value")
   console.log(myLibrary)
   author.value = "";
   title.value = "";
@@ -87,6 +84,9 @@ form.addEventListener('submit',function(event){
 
 
 //Card Creation
+function createCard(title, author, pages, status){
+
+
 const cardPlace = document.querySelector('#main');
 
 const card = document.createElement("div");
@@ -97,51 +97,97 @@ cardContent.classList.add("card-content");
 
 const bookTitle = document.createElement("div");
 bookTitle.classList.add('title')
-bookTitle.textContent ="Book Title: " 
+const titleSpan = document.createElement("span");
+bookTitle.textContent ="Book Title: " ;
+
 
 
 const bookAuthor = document.createElement("div");
-bookAuthor.classList.add('author')
-bookAuthor.textContent = "Author Name: "
+bookAuthor.classList.add('author');
+const authorSpan = document.createElement("span");
+bookAuthor.textContent = "Author Name: ";
+
 
 
 const bookPages = document.createElement("div");
 bookPages.classList.add('pages')
-bookPages.textContent = "Number of Pages: "
+const pagesSpan = document.createElement("span");
+bookPages.textContent = "Number of Pages: ";
+
 
 const readStatus = document.createElement("div");
 readStatus.classList.add('status') 
-readStatus.textContent = "Read Status: "
+const readSpan = document.createElement("span");
+readStatus.textContent = "Read Status: ";
+bookTitle.appendChild(titleSpan);
+bookAuthor.appendChild(authorSpan);
+bookPages.appendChild(pagesSpan);
+readStatus.appendChild(readSpan);
+
+cardContent.appendChild(bookTitle);
+cardContent.appendChild(bookAuthor);
+cardContent.appendChild(bookPages);
+cardContent.appendChild(readStatus);
+
+const buttonsContainer = document.createElement("div");
+buttonsContainer.classList.add("card-buttons");
+buttonsContainer.innerHTML = `
+<button id = "read"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle-outline</title><path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2,4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" /></svg>Mark as Read</button>  
+<button id = "delete"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg> Delete</button>
+
+`;
 
 
-function createCard() {
-  cardContent.appendChild(bookTitle);
-  cardContent.appendChild(bookAuthor);
-  cardContent.appendChild(bookPages);
-  cardContent.appendChild(readStatus);
-  
-  const buttonsContainer = document.createElement("div");
-  buttonsContainer.classList.add("card-buttons");
-  buttonsContainer.innerHTML = `
-  <button> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle-outline</title><path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2,4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" /></svg>Mark as Read</button>  
-  <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg> Delete</button>
- 
-  `;
- 
+
+titleSpan.textContent = title;
+authorSpan.textContent = author;
+pagesSpan.textContent = pages;
+readSpan.textContent = status;
+card.appendChild(cardContent);
+
+card.appendChild(buttonsContainer);
+
+cardPlace.appendChild(card);
+}
 
 
-
-
-
-
-  card.appendChild(cardContent);
-
-  card.appendChild(buttonsContainer);
- 
-  cardPlace.appendChild(card);
+//this is for the default books that are already in the library.
+for (let i = 0; i < myLibrary.length; i++){
+    createCard(myLibrary[i].title, myLibrary[i].author, myLibrary[i].pages, myLibrary[i].readStatus);
 }
 
 
 
+const deleteButton = document.querySelectorAll("#delete");
+const main = document.querySelector("#main");
+const card = document.querySelector(".card");
+
+document.addEventListener('click', (event) => {
+  if (event.target.id === 'delete') {
+    const card = event.target.closest('.card');
+    const titleElement = card.querySelector('.title span');
+    const title = titleElement.textContent;
+    if (card) {
+      myLibrary = myLibrary.filter(book => book.title != title);
+      card.parentNode.removeChild(card);
+    }
+  }
+
+
+  if (event.target.id === 'read'){
+    const card = event.target.closest('.card');
+    if (event.target.style.backgroundColor === 'lightgreen'){
+      event.target.style.backgroundColor = 'blue';
+      const readSTatusElement = card.querySelector('.status span');
+      readSTatusElement.textContent = "Not finished yet";
+    }
+    else{
+      event.target.style.backgroundColor = 'lightgreen'
+      const readSTatusElement = card.querySelector('.status span');
+      readSTatusElement.textContent = "Finished";
+    }
+    
+  }
+});
 
 
