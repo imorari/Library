@@ -57,7 +57,65 @@ function addBookToLibrary(book) {
 
 // HTML Stuff
 
-const form = document.querySelector("#form");
+//Form Creation
+const formContainer = document.querySelector("#form-container");
+
+const form = document.createElement('form');
+form.id = "form" ;
+form.method = "post";
+
+const labelTitle = document.createElement("label");
+labelTitle.setAttribute("for", "title");
+labelTitle.textContent = "Title: "
+
+const inputTitle = document.createElement("input");
+inputTitle.setAttribute("type", "text");
+inputTitle.id = "title";
+inputTitle.setAttribute("name", "title_name");
+inputTitle.setAttribute("autocomplete", "off")
+
+
+const labelAuthor = document.createElement("label");
+labelAuthor.setAttribute("for", "author");
+labelAuthor.textContent = "Author: "
+
+const inputAuthor = document.createElement("input");
+inputAuthor.setAttribute("type", "text");
+inputAuthor.id = "author";
+inputAuthor.setAttribute("name", "author_name");
+inputAuthor.setAttribute("autocomplete", "off")
+
+
+const labelPages = document.createElement("label");
+labelPages.setAttribute("for", "pages");
+labelPages.textContent = "Pages: "
+
+const inputPages = document.createElement("input");
+inputPages.setAttribute("type", "number");
+inputPages.id = "pages";
+inputPages.setAttribute("name", "page_number");
+inputPages.setAttribute("min", "0");
+inputPages.setAttribute("max", "999999");
+inputPages.setAttribute("autocomplete", "off")
+
+const submitButton = document.createElement("button");
+submitButton.innerHTML = ` <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-right-bold-box</title><path d="M3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19M17,12L12,7V10H8V14H12V17L17,12Z" /></svg>Submit`
+
+
+
+form.appendChild(labelTitle);
+form.appendChild(inputTitle);
+
+form.appendChild(labelAuthor);
+form.appendChild(inputAuthor);
+
+
+form.appendChild(labelPages);
+form.appendChild(inputPages);
+form.appendChild(submitButton)
+formContainer.appendChild(form);
+
+// const form = document.querySelector("#form");
 const author = document.querySelector('#author');
 const title = document.querySelector('#title');
 const pages = document.querySelector('#pages');
@@ -155,8 +213,6 @@ cardPlace.appendChild(card);
 for (let i = 0; i < myLibrary.length; i++){
     createCard(myLibrary[i].title, myLibrary[i].author, myLibrary[i].pages, myLibrary[i].readStatus);
 }
-
-
 
 const deleteButton = document.querySelectorAll("#delete");
 const main = document.querySelector("#main");
