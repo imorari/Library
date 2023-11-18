@@ -56,9 +56,13 @@ function addBookToLibrary(book) {
 
 
 // HTML Stuff
+const formContainer = document.querySelector("#form-container");
 
 //Form Creation
-const formContainer = document.querySelector("#form-container");
+
+function createForm(){
+  
+
 
 const form = document.createElement('form');
 form.id = "form" ;
@@ -99,45 +103,50 @@ inputPages.setAttribute("max", "999999");
 inputPages.setAttribute("autocomplete", "off")
 
 const submitButton = document.createElement("button");
-submitButton.innerHTML = ` <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-right-bold-box</title><path d="M3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19M17,12L12,7V10H8V14H12V17L17,12Z" /></svg>Submit`
+submitButton.textContent = "Submit";
+submitButton.setAttribute("type", "submit")
+
+
+const divTitle = document.createElement("div");
+divTitle.id = "form-title";
+divTitle.innerHTML =`New Book<div class="form-close" id="close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg></div>`
 
 
 
-form.appendChild(labelTitle);
-form.appendChild(inputTitle);
 
-form.appendChild(labelAuthor);
-form.appendChild(inputAuthor);
+formContainer.classList.add('form-class');
+form.appendChild(divTitle);
+
+const inputGroup = document.createElement("div");
+inputGroup.classList.add("input-group")
+inputGroup.appendChild(labelTitle);
+inputGroup.appendChild(inputTitle);
+form.appendChild(inputGroup)
 
 
-form.appendChild(labelPages);
-form.appendChild(inputPages);
+const inputGroup2 = document.createElement("div");
+inputGroup2.classList.add("input-group")
+inputGroup2.appendChild(labelAuthor);
+inputGroup2.appendChild(inputAuthor);
+form.appendChild(inputGroup2)
+
+const inputGroup3 = document.createElement("div");
+inputGroup3.classList.add("input-group")
+inputGroup3.appendChild(labelPages);
+inputGroup3.appendChild(inputPages);
+form.appendChild(inputGroup3)
+
 form.appendChild(submitButton)
 formContainer.appendChild(form);
 
-// const form = document.querySelector("#form");
-const author = document.querySelector('#author');
-const title = document.querySelector('#title');
-const pages = document.querySelector('#pages');
 
 
-let book;
+}
 
-form.addEventListener('submit',function(event){
-  event.preventDefault();
-  if (title.value.trim() === "" || author.value.trim() === "" || pages.value.trim() === "") {
-    alert("Please fill in all fields");
-    return;
-  }
 
-  book = new Book(title.value, author.value, pages.value , "temp value")
-  addBookToLibrary(book);
-  createCard(title.value, author.value, pages.value , "temp value")
-  console.log(myLibrary)
-  author.value = "";
-  title.value = "";
-  pages.value = "";
-})
+
+
+
 
 
 
@@ -209,7 +218,55 @@ cardPlace.appendChild(card);
 }
 
 
+
+const addBook = document.querySelector(".add-book");
+
+function clickHandler() {
+  createForm();
+  addBook.removeEventListener('click', clickHandler);
+  
+  const form = document.querySelector("#form");
+  const author = document.querySelector('#author');
+  const title = document.querySelector('#title');
+  const pages = document.querySelector('#pages');
+
+  let book;
+
+
+
+form.addEventListener('submit',function(event){
+  event.preventDefault();
+  if (title.value.trim() === "" || author.value.trim() === "" || pages.value.trim() === "") {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  book = new Book(title.value, author.value, pages.value , "temp value")
+  addBookToLibrary(book);
+  createCard(title.value, author.value, pages.value , "temp value")
+  console.log(myLibrary)
+  author.value = "";
+  title.value = "";
+  pages.value = "";
+
+})
+
+
+const formClose = document.querySelector(".form-close");
+
+
+formClose.addEventListener('click',()=>{
+  formContainer.removeAttribute('class');
+  formContainer.removeChild(form);
+  addBook.addEventListener('click', clickHandler);
+  console.log(formContainer)
+})
+
+}
+
+addBook.addEventListener('click', clickHandler);
 //this is for the default books that are already in the library.
+
 for (let i = 0; i < myLibrary.length; i++){
     createCard(myLibrary[i].title, myLibrary[i].author, myLibrary[i].pages, myLibrary[i].readStatus);
 }
@@ -218,11 +275,14 @@ const deleteButton = document.querySelectorAll("#delete");
 const main = document.querySelector("#main");
 const card = document.querySelector(".card");
 
+
 document.addEventListener('click', (event) => {
+
   if (event.target.id === 'delete') {
     const card = event.target.closest('.card');
     const titleElement = card.querySelector('.title span');
     const title = titleElement.textContent;
+    
     if (card) {
       myLibrary = myLibrary.filter(book => book.title != title);
       card.parentNode.removeChild(card);
@@ -245,5 +305,4 @@ document.addEventListener('click', (event) => {
     
   }
 });
-
 

@@ -94,18 +94,6 @@ button{
 
 
 
-form{
-    display: flex;
-    flex-direction: column;
-}
-
-
-
-
-
-
-
-
 span{
     font-weight: 100;
     color: aqua;
@@ -121,4 +109,103 @@ span{
 svg{
     height: 25px;
     fill: white;
+}
+
+.form-class{
+    /* display: none; */
+    height: 400px;
+    width: 400px;
+    box-sizing: border-box;
+    background-color: #704AB3;
+    border-radius: 10px;
+    padding: 20px;
+    position: absolute;
+    top: 25%;
+    right: 40%;
+    
+}
+input{
+    width: 350px;
+    height: 30px;
+    padding: 5px;
+    border: none;
+    font-size: large;
+    border-radius: 5px;
+}
+.form-close:hover{
+    cursor: pointer;
+    transform: scale(1.1)
+}
+label{
+    font-size: x-large;
+}
+#form-title{
+    width: 100%;
+    padding-left:100px;
+    font-weight: bolder;
+    font-size: xx-large;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+
+}
+form button{
+    width: 200px;
+    padding: 5px;
+    border-radius: 25px;
+    font-size: xx-large;
+    background-color: steelblue;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    transition: 0.25s ease;
+    box-shadow: 3px 3px 5px #aaa;
+} 
+.input-group{
+    display: flex;
+    flex-direction: column;
+}
+
+form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+  button:hover {
+    box-shadow: 5px 5px 10px #aaa;
+    cursor: pointer;
+  }
+
+
+
+
+
+.add-book{
+    height: 70px;
+    width: 70px;
+    background-color: rgb(87, 87, 248);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 1px 11px 0px rgba(0, 0, 0, 0.63); 
+    align-self: center;
+    position: fixed;
+    left: 82%;
+    top: 30%;
+
+}
+
+.add-book svg{
+    fill: black;
+    height: 45px;
+}
+.add-book:hover{
+    box-shadow: 5px 5px 10px #aaa;
+    cursor: pointer;
+    
 }
