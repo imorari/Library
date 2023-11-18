@@ -138,17 +138,7 @@ form.appendChild(inputGroup3)
 
 form.appendChild(submitButton)
 formContainer.appendChild(form);
-
-
-
 }
-
-
-
-
-
-
-
 
 //Card Creation
 function createCard(title, author, pages, status){
@@ -203,37 +193,27 @@ buttonsContainer.innerHTML = `
 <button id = "delete"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg> Delete</button>
 
 `;
-
-
-
 titleSpan.textContent = title;
 authorSpan.textContent = author;
 pagesSpan.textContent = pages;
 readSpan.textContent = status;
 card.appendChild(cardContent);
-
 card.appendChild(buttonsContainer);
-
 cardPlace.appendChild(card);
+
+
+
 }
-
-
-
-const addBook = document.querySelector(".add-book");
-
 function clickHandler() {
   createForm();
+  //remove event listener if the form is on the screen
   addBook.removeEventListener('click', clickHandler);
-  
   const form = document.querySelector("#form");
   const author = document.querySelector('#author');
   const title = document.querySelector('#title');
   const pages = document.querySelector('#pages');
-
   let book;
-
-
-
+//form submit button event listener
 form.addEventListener('submit',function(event){
   event.preventDefault();
   if (title.value.trim() === "" || author.value.trim() === "" || pages.value.trim() === "") {
@@ -251,80 +231,54 @@ form.addEventListener('submit',function(event){
 
 })
 
-
+// Form Close event listener
 const formClose = document.querySelector(".form-close");
-
-
 formClose.addEventListener('click',()=>{
   formContainer.removeAttribute('class');
   formContainer.removeChild(form);
   addBook.addEventListener('click', clickHandler);
-  console.log(formContainer)
 })
-
 }
-
-
-
-
-
-
-
-
-
+const addBook = document.querySelector(".add-book");
 addBook.addEventListener('click', clickHandler);
-//this is for the default books that are already in the library.
 
+//this is for the default books that are already in the library.
 for (let i = 0; i < myLibrary.length; i++){
     createCard(myLibrary[i].title, myLibrary[i].author, myLibrary[i].pages, myLibrary[i].readStatus);
 }
-
+// Card Delete event listener and function
 const deleteButton = document.querySelectorAll("#delete");
 const main = document.querySelector("#main");
 const card = document.querySelector(".card");
-
-
-document.addEventListener('click', (event) => {
-
-  if (event.target.id === 'delete') {
-    const card = event.target.closest('.card');
+deleteButton.forEach((button) => button.addEventListener('click', deleteBook));
+function deleteBook(){
+    const card = this.parentElement.parentElement;
     const titleElement = card.querySelector('.title span');
     const title = titleElement.textContent;
-    
-    if (card) {
-      myLibrary = myLibrary.filter(book => book.title != title);
-      card.parentNode.removeChild(card);
-    }
-  }
-
-
-  if (event.target.id === 'read'){
-    const card = event.target.closest('.card');
-    if (event.target.style.backgroundColor === 'lightgreen'){
-      event.target.style.backgroundColor = 'blue';
-      const readSTatusElement = card.querySelector('.status span');
-      readSTatusElement.textContent = "Not finished yet";
-    }
-    else{
-      event.target.style.backgroundColor = 'lightgreen'
-      const readSTatusElement = card.querySelector('.status span');
+      if (card) {
+        myLibrary = myLibrary.filter(book => book.title != title);
+        card.parentNode.removeChild(card);
+      }
+}
+//Card Read button event listener and function
+const readButton = document.querySelectorAll("#read");
+readButton.forEach((button)=>button.addEventListener('click', readFunction))
+function readFunction(){
+    const card = this.parentElement.parentElement;
+    const computedStyle = window.getComputedStyle(this);
+    let backgroundColor = computedStyle.backgroundColor;
+    const readSTatusElement = card.querySelector('.status span');
+    console.log(backgroundColor)
+    if (backgroundColor ==="rgb(0, 0, 255)"){
+      this.style.backgroundColor = 'green';
       readSTatusElement.textContent = "Finished";
     }
-    
-  }
-});
-
-
-
-
-
-
-
-
-
-
-//Form Drag Function(from w3 school not mine)
-
+    if(backgroundColor === "rgb(0, 128, 0)"){
+      this.style.backgroundColor = 'blue';
+      readSTatusElement.textContent = "Not Finished Yet";
+    }
+}
+// Form Drag Function(from w3 school not mine)
 dragElement(document.getElementById("form-container"));
 
 function dragElement(elmnt) {
@@ -357,8 +311,4 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
-
-
-
-
 }
