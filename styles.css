@@ -113,6 +113,7 @@ svg{
 
 .form-class{
     /* display: none; */
+    cursor: grab;
     height: 400px;
     width: 400px;
     box-sizing: border-box;
@@ -161,6 +162,9 @@ form button{
     font-size: 16px;
     transition: 0.25s ease;
     box-shadow: 3px 3px 5px #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 } 
 .input-group{
     display: flex;
