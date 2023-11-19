@@ -2,7 +2,7 @@
 let myLibrary = [];           
 //Book constructor
 
-function Book(title = "Untitled", author = "Unknown Author", pages = 0, status = false) {
+function Book(title = "Untitled", author = "Unknown Author", pages = 0, status = "") {
     this.title = title; 
     this.author = author;
     this.pages = pages;
@@ -115,6 +115,12 @@ formContainer.appendChild(form);
 //Card Creation
 const cardPlace = document.querySelector('#main');    //made this public and accessible for other functions
 function createCard(title, author, pages, status){
+  if (status === true){
+    status = "Finished"
+  }
+  if (status === false){
+    status = "Not finished yet"
+  }
 const card = document.createElement("div");
 card.classList.add("card");
 
@@ -176,6 +182,12 @@ function clickHandler() {
   const author = document.querySelector('#author');
   const title = document.querySelector('#title');
   const pages = document.querySelector('#pages');
+  const readCheck = document.querySelector('.switch input')
+  // readCheck.addEventListener('click',()=>{
+  //   console.log(readCheck.checked)
+  // })
+  
+
   let book;
 //form submit button event listener
 form.addEventListener('submit',function(event){
@@ -184,9 +196,9 @@ form.addEventListener('submit',function(event){
     alert("Please fill in all fields");
     return;
   }
-  book = new Book(title.value, author.value, pages.value , "temp value")
+  book = new Book(title.value, author.value, pages.value , readCheck.checked)
   addBookToLibrary(book);
-  createCard(title.value, author.value, pages.value , "temp value")
+  createCard(title.value, author.value, pages.value , readCheck.checked)
   console.log(myLibrary)
   author.value = "";
   title.value = "";
@@ -230,9 +242,13 @@ cardPlace.addEventListener('click',event=>{
     const backgroundColor = computedStyle.backgroundColor;
     const card = event.target.parentElement.parentElement;
     const readSTatusElement = card.querySelector('.status span');
+    const tempTitle = card.querySelector('.title span').textContent
+
     if (backgroundColor === "rgb(0, 0, 255)") {
         event.target.style.backgroundColor = 'green';
         readSTatusElement.textContent = "Finished";
+        console.log(myLibrary.book[title])
+
     }
     if (backgroundColor === "rgb(0, 128, 0)") {
         event.target.style.backgroundColor = 'blue';
