@@ -1,7 +1,6 @@
 // All book objects will be stored in this array
 let myLibrary = [];           
 //Book constructor
-
 function Book(title = "Untitled", author = "Unknown Author", pages = 0, status = "") {
     this.title = title; 
     this.author = author;
@@ -13,52 +12,40 @@ const newBook2 = new Book("Timeless Odyssey", "Samuel Journey", 350, true);
 const newBook3 = new Book("City of Dreams", "Ava Dreamer", 280, false);
 const newBook4 = new Book("Beyond the Horizon", "Oliver Skyward", 420, true);
 const newBook5 = new Book("Serenity Falls", "Luna Waters", 150, false);
-
 addBookToLibrary(newBook1);
 addBookToLibrary(newBook2);
 addBookToLibrary(newBook3);
 addBookToLibrary(newBook4);
 addBookToLibrary(newBook5);
-
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
-
 // HTML Stuff
 const formContainer = document.querySelector("#form-container");
-
 //Form Creation
 function createForm(){
 const form = document.createElement('form');
 form.id = "form" ;
 form.method = "post";
-
 const labelTitle = document.createElement("label");
 labelTitle.setAttribute("for", "title");
 labelTitle.textContent = "Title: "
-
 const inputTitle = document.createElement("input");
 inputTitle.setAttribute("type", "text");
 inputTitle.id = "title";
 inputTitle.setAttribute("name", "title_name");
 inputTitle.setAttribute("autocomplete", "off")
-
-
 const labelAuthor = document.createElement("label");
 labelAuthor.setAttribute("for", "author");
 labelAuthor.textContent = "Author: "
-
 const inputAuthor = document.createElement("input");
 inputAuthor.setAttribute("type", "text");
 inputAuthor.id = "author";
 inputAuthor.setAttribute("name", "author_name");
 inputAuthor.setAttribute("autocomplete", "off")
-
-
 const labelPages = document.createElement("label");
 labelPages.setAttribute("for", "pages");
 labelPages.textContent = "Pages: "
-
 const inputPages = document.createElement("input");
 inputPages.setAttribute("type", "number");
 inputPages.id = "pages";
@@ -66,37 +53,29 @@ inputPages.setAttribute("name", "page_number");
 inputPages.setAttribute("min", "0");
 inputPages.setAttribute("max", "999999");
 inputPages.setAttribute("autocomplete", "off")
-
 const submitButton = document.createElement("button");
 submitButton.textContent = "Submit";
 submitButton.setAttribute("type", "submit")
-
-
 const divTitle = document.createElement("div");
 divTitle.id = "form-title";
 divTitle.innerHTML =`New Book<div class="form-close" id="close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg></div>`
 formContainer.classList.add('form-class');
 form.appendChild(divTitle);
-
 const inputGroup = document.createElement("div");
 inputGroup.classList.add("input-group")
 inputGroup.appendChild(labelTitle);
 inputGroup.appendChild(inputTitle);
 form.appendChild(inputGroup)
-
-
 const inputGroup2 = document.createElement("div");
 inputGroup2.classList.add("input-group")
 inputGroup2.appendChild(labelAuthor);
 inputGroup2.appendChild(inputAuthor);
 form.appendChild(inputGroup2)
-
 const inputGroup3 = document.createElement("div");
 inputGroup3.classList.add("input-group")
 inputGroup3.appendChild(labelPages);
 inputGroup3.appendChild(inputPages);
 form.appendChild(inputGroup3)
-
 const switchLabel = document.createElement("label");
 switchLabel.classList.add("switch");
 const checkboxInput = document.createElement("input");
@@ -107,11 +86,9 @@ sliderSpan.classList.add("round");
 switchLabel.appendChild(checkboxInput);
 switchLabel.appendChild(sliderSpan);
 form.appendChild(switchLabel);
-
 form.appendChild(submitButton)
 formContainer.appendChild(form);
 }
-
 //Card Creation
 const cardPlace = document.querySelector('#main');    //made this public and accessible for other functions
 function createCard(title, author, pages, status){
@@ -123,30 +100,20 @@ function createCard(title, author, pages, status){
   }
 const card = document.createElement("div");
 card.classList.add("card");
-
 const cardContent = document.createElement("div");
 cardContent.classList.add("card-content");
-
 const bookTitle = document.createElement("div");
 bookTitle.classList.add('title')
 const titleSpan = document.createElement("span");
 bookTitle.textContent ="Book Title: " ;
-
-
-
 const bookAuthor = document.createElement("div");
 bookAuthor.classList.add('author');
 const authorSpan = document.createElement("span");
 bookAuthor.textContent = "Author Name: ";
-
-
-
 const bookPages = document.createElement("div");
 bookPages.classList.add('pages')
 const pagesSpan = document.createElement("span");
 bookPages.textContent = "Number of Pages: ";
-
-
 const readStatus = document.createElement("div");
 readStatus.classList.add('status') 
 const readSpan = document.createElement("span");
@@ -183,11 +150,6 @@ function clickHandler() {
   const title = document.querySelector('#title');
   const pages = document.querySelector('#pages');
   const readCheck = document.querySelector('.switch input')
-  // readCheck.addEventListener('click',()=>{
-  //   console.log(readCheck.checked)
-  // })
-  
-
   let book;
 //form submit button event listener
 form.addEventListener('submit',function(event){
@@ -199,7 +161,6 @@ form.addEventListener('submit',function(event){
   book = new Book(title.value, author.value, pages.value , readCheck.checked)
   addBookToLibrary(book);
   createCard(title.value, author.value, pages.value , readCheck.checked)
-  console.log(myLibrary)
   author.value = "";
   title.value = "";
   pages.value = "";
@@ -242,17 +203,25 @@ cardPlace.addEventListener('click',event=>{
     const backgroundColor = computedStyle.backgroundColor;
     const card = event.target.parentElement.parentElement;
     const readSTatusElement = card.querySelector('.status span');
-    const tempTitle = card.querySelector('.title span').textContent
-
+    const tempTitle = card.querySelector('.title span').textContent;
+    const bookIndex = myLibrary.findIndex(book => book.title === tempTitle);
     if (backgroundColor === "rgb(0, 0, 255)") {
         event.target.style.backgroundColor = 'green';
         readSTatusElement.textContent = "Finished";
-        console.log(myLibrary.book[title])
-
+        if (bookIndex !== -1) {
+          myLibrary[bookIndex].status = true;
+        } else {
+          console.error(`Book with title ${tempTitle} not found in myLibrary.`);
+        }
     }
     if (backgroundColor === "rgb(0, 128, 0)") {
         event.target.style.backgroundColor = 'blue';
         readSTatusElement.textContent = "Not Finished Yet";
+        if (bookIndex !== -1) {
+          myLibrary[bookIndex].status = false;
+        } else {
+          console.error(`Book with title ${tempTitle} not found in myLibrary.`);
+        }
     }
 }
 })
